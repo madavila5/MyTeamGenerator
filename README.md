@@ -14,7 +14,13 @@ Professional Tean Generator
 
 ## Installation Instructions
 
-- Install npm module inquirer in order for it to run.
+- Install npm module inquirer, jest and install in order for it to run.
+
+```
+npm install
+npm i inquirer
+npm i jest
+```
 
 ## Usage
 
