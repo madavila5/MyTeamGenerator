@@ -80,8 +80,44 @@ const displayInterns = internsArr => {
 
 module.exports = (managerArr, engineersArr, internsArr) => {
     return `
-    
-    
-    
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css"
+    />
+    <script
+    src="https://kit.fontawesome.com/f78f1848e0.js"
+    crossorigin="anonymous"
+  ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" href="style.css"/>
+    <title>Team Profile</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="text-center pt-2" id="appTitle">TEAM</h1>
+    </header>
+    <div class="container-fluid p-0">
+        <div class="col mt-5">
+            <div class="row" id="team-container">
+                ${displayManagers(managersArr)}
+                ${displayEngineers(engineersArr)}
+                ${displayInterns(internsArr)}
+            </div>
+        </div>
+    </div>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
+    </body>
+  </html>
     `;
 }
