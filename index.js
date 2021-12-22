@@ -1,13 +1,13 @@
-const fs = require('fs');
-const inquirer = require('inquirer');
+const fs = require("fs");
+const inquirer = require("inquirer");
+ 
+const Employee = require("./lib/Employee");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const template = require("./src/template");
 
-const employee = require('./lib/employee');
-const manager = require('./lib/manager');
-const engineer = require('./lib/engineer');
-const intern = require('./lib/intern');
-const template = require('./src/template');
-
-var employeePrompt = [
+var employeePrompts = [
     {
         type: 'input',
         name: 'officeNumber',
@@ -16,30 +16,27 @@ var employeePrompt = [
     {
         type: 'input',
         name: 'username',
-        message: 'Enter Engineer GitHub Username',
+        message: "Enter Engineer's GitHub Username",
     },
     {
         type: 'input',
         name: 'school',
-        messagel: "Enter Intern's School",
-    }
-]
-
+        message: "Enter Intern's School",
+    }]
 class team {
-    constructor(){
+    constructor() {
         this.employee;
         this.managers = [];
         this.engineers = [];
         this.interns = [];
     }
-}
 
 initializePrompts() {
     inquirer.prompt([
         {
             type: 'list',
             name: 'role',
-            message: 'Select the Employee Role:',
+            message: 'Select Employee Role:',
             choices: ['Manager', 'Engineer', 'Intern'],
         },
         {
@@ -48,10 +45,10 @@ initializePrompts() {
             message: 'Enter Employee Name',
             validate: (nameInput) => {
                 if (nameInput) {
-                    return true;
+                return true;
                 } else {
-                    console.log ('Please Enter Employee Name');
-                    return false;
+                console.log("Please Enter Employee Name");
+                return false;
                 }
             },
         },
@@ -61,10 +58,10 @@ initializePrompts() {
             message: 'Enter Employee ID',
             validate: (idInput) => {
                 if (idInput) {
-                    return true;
+                return true;
                 } else {
-                    console.log('Please Enter Employee ID');
-                    return false;
+                console.log("Please Enter Employee ID");
+                return false;
                 }
             },
         },
@@ -72,33 +69,100 @@ initializePrompts() {
             type: 'input',
             name: 'email',
             message: 'Enter Employee Email',
-            validate: (emailIput) => {
-                if (emailIput) {s
-                    return true;
+            validate: (emailInput) => {
+                if (emailInput) {
+                return true;
                 } else {
-                    console.log ('Please Enter Employee Email');
-                    return false;
+                console.log("Please Enter Employee Email");
+                return false;
                 }
-            },
+            }
         },
-    ]).then ((employeeData)=> {
+    ]).then((employeeData) => {
         switch (employeeData.role) {
             case 'Manager':
-                this.addManager(employeeData);
-                break;
+              this.addManager(employeeData);
+              break;
             case 'Engineer':
-                this.addEngineer(employeeData);
-                break;
+              this.addEngineer(employeeData);
+              break;
             case 'Intern':
-                this.addIntern(employeeData);
-                break;
+              this.addIntern(employeeData);
+              break;
+    }
+});
+}
+
+    addManager(employeeData) {
+        inquirer.prompt(employeePrompts[0])
+        .then((office) => {
+            let newManager = new Manager(
+                employeeData.name,
+                employeeData.id,
+                employeeData.email,
+                office.officeNumber
+            );
+            this.managers.push(newManager);
+            // console.log(this.managers);
+
+            return this.addEmployeesConfirm();
+        });
+    }
+
+    addEngineer(employeeData) {
+        inquirer.prompt(employeePrompts[1])
+        .then((github) => {
+            let newEngineer = new Engineer(
+                employeeData.name,
+                employeeData.id,
+                employeeData.email,
+                github.username
+            );
+            this.engineers.push(newEngineer);
+            // console.log(newEngineer);
+
+            return this.addEmployeesConfirm();
+        });
+    }
+
+    addIntern(employeeData) {
+        inquirer.prompt(employeePrompts[2])
+        .then((school) => {
+            let newIntern = new Intern(
+                employeeData.name,
+                employeeData.id,
+                employeeData.email,
+                school.school
+            );
+            this.interns.push(newIntern);
+            // console.log(newIntern);
+
+            return this.addEmployeesConfirm();
+        });
+    }
+
+    addEmployeesConfirm() {
+        inquirer.prompt(
+            {
+                type: 'confirm',
+                name: 'addConfirm',
+                message: 'Do You Want To Add Another Employee?',
+                default: true
+            })
+        .then(({addConfirm}) => {
+            if(addConfirm) {
+                this.initializePrompts();
+            } else {
+                const pageHTML = generatePage(this.managers, this.engineers, this.interns)
+                console.log('==========================');
+                console.log(this.managers, this.engineers, this.interns);                 
+                fs.writeFile('./dist/index.html', pageHTML, err => {
+                    if (err) throw new Error(err);
+                console.log('Your Team Profile has been GENERATED! Check out index.html in this directory to see it.');
+            })
         }
-    });
+    })
 }
-
-addManager(employeeData) {
-
 }
-
 
 new team().initializePrompts();
