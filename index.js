@@ -1,10 +1,10 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
  
-const Employee = require("./lib/Employee");
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+const Employee = require("./lib/employee");
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 const template = require("./src/template");
 
 var employeePrompts = [

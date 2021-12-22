@@ -1,7 +1,7 @@
 # MyTeamGenerator
 
 Professional Tean Generator
-- 
+- Node.js command-line were used in order to gather employe information and to generate HTML site for team.
 
 
 # Table of Content
@@ -33,9 +33,9 @@ npm i jest
 
 ## Images
 
-<img src="utils/team.gif" alt="Team Generator walk through">
+<img src="src/team.gif" alt="Team Generator walk through">
 
-- 
+- https://watch.screencastify.com/v/evSX3WWJY5DWaZJXVan0
 
 ## Link
 Not Deployed, for terminal use
